@@ -8,6 +8,6 @@ const fileController = require("../controllers/fileController");
 router.post("/upload", upload.single("file"), fileController.uploadFile);
 
 //download file route
-router.get("/download/:filename", fileController.downloadFile);
+router.get("/download/:fileId", fileController.downloadFile);
 
 module.exports = router;

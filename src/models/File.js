@@ -1,0 +1,20 @@
+const mongoose = require("mongoose");
+
+const chunkSchema = new mongoose.Schema({
+    chunkId: String,
+    node: String,
+    order: Number
+});
+
+const fileSchema = new mongoose.Schema({
+    fileId: String,
+    fileName: String,
+    size: Number,
+    chunks: [chunkSchema],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+module.exports = mongoose.model("File", fileSchema);
