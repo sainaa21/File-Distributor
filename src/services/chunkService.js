@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-const { getNextNode } = require("../utils/nodeManager");
+const { getReplicaNodes } = require("../utils/nodeManager");
 const CHUNK_SIZE = 5 * 1024 * 1024;
 async function splitFileIntoChunks(filePath) {
     const fileStream = fs.createReadStream(filePath, {
@@ -11,29 +11,30 @@ async function splitFileIntoChunks(filePath) {
     const chunks = [];
     for await (const chunk of fileStream) {
         const chunkId = uuidv4();
-        const node = getNextNode();
+        const replicaNodes = getReplicaNodes(2);
         const chunkFileName = `${chunkId}.chunk`;
-        const chunkPath = path.join(
-            __dirname,
-            "..",
-            "storage",
-            node,
-            chunkFileName
-        );
-        const fsExtra = require("fs-extra");
 
-        // ensure the directory exists
-        await fsExtra.ensureDir(path.dirname(chunkPath));
-console.log("Saving chunk to:", chunkPath);
-        // write the chunk
-        fs.writeFileSync(chunkPath, chunk);
+        for (const node of replicaNodes) {
+            const chunkPath = path.join(
+                __dirname,
+                "..",
+                "storage",
+                node,
+                chunkFileName
+            );
+
+
+            // write the chunk
+            fs.writeFileSync(chunkPath, chunk);
+
+        }
         chunks.push({
             chunkId,
-            node,
+            nodes: replicaNodes,
             order: chunkIndex
         });
         chunkIndex++;
-    } 
+    }
     return chunks;
 }
 module.exports = { splitFileIntoChunks };

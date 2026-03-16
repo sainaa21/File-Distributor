@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const chunkSchema = new mongoose.Schema({
     chunkId: String,
-    node: String,
+    nodes: [String],
     order: Number
 });
 

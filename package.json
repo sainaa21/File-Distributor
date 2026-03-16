@@ -15,6 +15,7 @@
     "fs-extra": "^11.3.4",
     "mongoose": "^9.2.3",
     "multer": "^2.1.1",
+    "redis": "^5.11.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

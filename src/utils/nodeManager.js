@@ -1,8 +1,11 @@
 const nodes = ["node1", "node2", "node3"];
 let currentNode = 0;
-function getNextNode() {
-    const node = nodes[currentNode];
-    currentNode = (currentNode + 1) % nodes.length;
-    return node;
+function getReplicaNodes(replicationFactor) {
+    const selectedNodes = [];
+    for (let i = 0; i < replicationFactor; i++) {
+        selectedNodes.push(nodes[currentNode]);
+        currentNode = (currentNode + 1) % nodes.length;
+    }
+    return selectedNodes;
 }
-module.exports = { getNextNode };
+module.exports = { getReplicaNodes };
