@@ -1,11 +1,37 @@
-const nodes = ["node1", "node2", "node3"];
+const nodes = require("../config/nodes");
 let currentNode = 0;
-function getReplicaNodes(replicationFactor) {
+async function getAvailableNodes(redisClient) {
+    const available = [];
+    for (const node of nodes) {
+        const status = await redisClient.get(`node:${node}`);
+        if (status === "alive") {
+            available.push(node);
+        }
+    }
+    return available;
+}
+async function getReplicaNodes(redisClient, replicationFactor) {
+    const availableNodes = await getAvailableNodes(redisClient);
+    if (availableNodes.length === 0) {
+        throw new Error("No active nodes available");
+    }
     const selectedNodes = [];
     for (let i = 0; i < replicationFactor; i++) {
-        selectedNodes.push(nodes[currentNode]);
-        currentNode = (currentNode + 1) % nodes.length;
+        const node = availableNodes[currentNode % availableNodes.length];
+        selectedNodes.push(node);
+        currentNode++;
     }
     return selectedNodes;
 }
-module.exports = { getReplicaNodes };
+async function getReadableNode(chunkNodes, redisClient) {
+    for (const node of chunkNodes) {
+        const status = await redisClient.get(`node:${node}`);
+
+        if (status === "alive") {
+            return node; //return first healthy node
+        }
+    }
+
+    throw new Error("All replicas are down");
+}
+module.exports = { getReplicaNodes, getReadableNode };

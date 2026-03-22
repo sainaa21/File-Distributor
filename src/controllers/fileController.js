@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 const { reconstructFile } = require("../services/reconstructService");
 const { redisClient } = require("../config/redis");
 console.log("reconstructFile:", reconstructFile);
+
 async function uploadFile(req, res) {
     try {
         const file = req.file;
