@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URI)
     await connectRedis();
     console.log("Calling heartbeat...");
 
-    startHeartBeat(redisClient);
+   startHeartBeat(redisClient);
     app.listen(PORT,()=>{
         console.log(`Server running on port ${PORT}`);
     });

@@ -10,8 +10,8 @@ async function connectRedis() {
     await redisClient.connect();
     console.log("Redis Connected");
 
-    for (const node of nodes) {
-        await redisClient.set(`node:${node.name}`, "alive");
-    }
+   for (const node of nodes) {
+     await redisClient.set(`node:${node.name}`, "alive");
+   }
 }
 module.exports = { redisClient, connectRedis };

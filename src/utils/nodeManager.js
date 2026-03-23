@@ -3,9 +3,9 @@ let currentNode = 0;
 async function getAvailableNodes(redisClient) {
     const available = [];
     for (const node of nodes) {
-        const status = await redisClient.get(`node:${node}`);
+        const status = await redisClient.get(`node:${node.name}`);
         if (status === "alive") {
-            available.push(node);
+            available.push(node.name);
         }
     }
     return available;

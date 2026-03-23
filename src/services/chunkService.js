@@ -24,6 +24,7 @@ async function splitFileIntoChunks(filePath) {
                 chunkFileName
             );
 
+            fs.mkdirSync(path.dirname(chunkPath), { recursive: true });
 
             // write the chunk
             fs.writeFileSync(chunkPath, chunk);
