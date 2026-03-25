@@ -8,6 +8,14 @@ async function getAvailableNodes(redisClient) {
             available.push(node.name);
         }
     }
+    if (available.length === 0) {
+        console.log("No nodes in Redis, initializing...");
+
+        for (const node of nodes) {
+            await redisClient.set(`node:${node.name}`, "alive");
+            available.push(node.name);
+        }
+    }
     return available;
 }
 async function getReplicaNodes(redisClient, replicationFactor) {

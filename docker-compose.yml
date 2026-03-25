@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - "5002:5002"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MONGO_URI=mongodb://mongo:27017/filedb
+    depends_on:
+      - redis
+      - mongo
+    networks:
+      - file-net
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - file-net
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - file-net
+
+  node1:
+    image: alpine
+    container_name: node1
+    volumes:
+      - ./storage/node1:/data
+    networks:
+      - file-net
+
+  node2:
+    image: alpine
+    container_name: node2
+    volumes:
+      - ./storage/node2:/data
+    networks:
+      - file-net
+
+  node3:
+    image: alpine
+    container_name: node3
+    volumes:
+      - ./storage/node3:/data
+    networks:
+      - file-net
+
+
+
+volumes:
+  mongo-data:
+
+networks:
+  file-net:

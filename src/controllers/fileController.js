@@ -13,7 +13,7 @@ async function uploadFile(req, res) {
 
         const fileId = uuidv4();
 
-        const chunks = await splitFileIntoChunks(file.path);
+        const chunks = await splitFileIntoChunks(file.path, redisClient);
 
         fs.unlinkSync(file.path); // delete the original uploaded file after chunking
 

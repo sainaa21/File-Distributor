@@ -1,10 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const {redisClient}=require("../config/redis");
 const { v4: uuidv4 } = require("uuid");
 const { getReplicaNodes } = require("../utils/nodeManager");
 const CHUNK_SIZE = 5 * 1024 * 1024;
-async function splitFileIntoChunks(filePath) {
+async function splitFileIntoChunks(filePath, redisClient) {
     const fileStream = fs.createReadStream(filePath, {
         highWaterMark: CHUNK_SIZE
     });
@@ -17,8 +16,7 @@ async function splitFileIntoChunks(filePath) {
 
         for (const node of replicaNodes) {
             const chunkPath = path.join(
-                __dirname,
-                "..",
+                process.cwd(),
                 "storage",
                 node,
                 chunkFileName
