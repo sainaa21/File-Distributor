@@ -17,8 +17,7 @@ async function reconstructFile(chunks, res) {
                 continue;
             }
             const chunkPath = path.join(
-                __dirname,
-                "..",
+                process.cwd(), 
                 "storage",
                 node,
                 `${chunk.chunkId}.chunk`

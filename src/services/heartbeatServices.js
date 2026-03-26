@@ -6,7 +6,7 @@ function startHeartBeat(redisClient) {
     setInterval(() => {
         for (const node of nodes) {
 
-            const nodePath = path.join(__dirname, "..", node.path);
+            const nodePath = path.join(process.cwd(), node.path);
 
             if (fs.existsSync(nodePath)) {
                 redisClient.set(`node:${node.name}`, "alive");
