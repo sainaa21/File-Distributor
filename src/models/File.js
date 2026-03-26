@@ -10,11 +10,7 @@ const fileSchema = new mongoose.Schema({
     fileId: String,
     fileName: String,
     size: Number,
-    chunks: [chunkSchema],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+    chunks: [chunkSchema]
+}, { timestamps: true }); 
 
 module.exports = mongoose.model("File", fileSchema);

@@ -9,6 +9,7 @@ router.post("/upload", upload.single("file"), fileController.uploadFile);
 
 //download file route
 router.get("/download/:fileId", fileController.downloadFile);
+router.get("/all", fileController.getAllFiles);
 
 //delete file route
 router.delete("/delete/:fileId", fileController.deleteFile);

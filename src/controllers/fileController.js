@@ -82,8 +82,8 @@ async function deleteFile(req, res) {
     for (const chunk of file.chunks) {
         for (const node of chunk.node || chunk.nodes) {
             const chunkPath = path.join(
-                __dirname,
-                "../storage",
+                process.cwd(),
+                "storage",
                 node,
                 `${chunk.chunkId}.chunk`
             );
@@ -100,4 +100,14 @@ async function deleteFile(req, res) {
         message: "File deleted successfully"
     });
 }
-module.exports = { uploadFile, downloadFile, deleteFile };
+async function getAllFiles(req, res) {
+    try {
+        const files = await File.find().sort({ createdAt: -1 });
+
+        res.json(files);
+    } catch (err) {
+        console.error("FETCH FILES ERROR:", err);
+        res.status(500).json({ message: "Error fetching files" });
+    }
+}
+module.exports = { uploadFile, downloadFile, deleteFile, getAllFiles };

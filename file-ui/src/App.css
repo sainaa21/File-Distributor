@@ -1,38 +1,121 @@
-.App {
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #1a0000, #400000);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  width: 420px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(15px);
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Drag Drop */
+.drop-zone {
+  border: 2px dashed #ff4d4d;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  transition: 0.3s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.drop-zone.active {
+  background: rgba(255, 77, 77, 0.2);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.custom-file {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #ff4d4d;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.custom-file:hover {
+  background: #ff1a1a;
+}
+
+/* File Preview */
+.file-box {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+/* Button */
+.upload-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  background: linear-gradient(45deg, #ff4d4d, #ff0000);
+  border: none;
+  border-radius: 10px;
   color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.upload-btn:hover {
+  transform: scale(1.05);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* File list */
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.file-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.actions button {
+  margin-left: 5px;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.download {
+  background: #00cc66;
+}
+
+.delete {
+  background: #ff3333;
+}
+
+.message {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* History */
+.history {
+  margin-top: 15px;
+  font-size: 12px;
+  opacity: 0.8;
 }
