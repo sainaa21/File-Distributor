@@ -59,7 +59,17 @@ services:
     networks:
       - file-net
 
-
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - file-net
 
 volumes:
   mongo-data:
